@@ -1,0 +1,192 @@
+import HelperFunctions as hf
+from collections import Counter as mset
+
+def problem21(n):
+	sums = {}
+	s = 0
+	for i in range(1,n+1): sums[i] = sum(hf.properDivisors(i))
+	for k,v in sums.iteritems():
+		if k!=v and v in range(1,n+1):
+			if sums[v] == k:
+				s += k
+	return s
+
+def problem22():
+	names = open('p022_names.txt','r').read().replace('"','').split(',')
+	names.sort()
+	letters={'A':1,'B':2,'C':3,'D':4,'E':5,'F':6,'G':7,'H':8,'I':9,'J':10,
+			'K':11,'L':12,'M':13,'N':14,'O':15,'P':16,'Q':17,'R':18,'S':19,
+			'T':20,'U':21,'V':22,'W':23,'X':24,'Y':25,'Z':26}
+	total = 0
+	for i in range(len(names)):
+		name = names[i]
+		score = 0
+		for l in name: score += letters[l]
+		score *= (i+1)
+		total += score
+	return total
+
+def problem23():
+	abundant = []
+	s = 0
+	for i in range(1,28124):
+		j = sum(hf.properDivisors(i))
+		if j>i: abundant.append(i)
+	additive = set([])
+	for a in abundant:
+		for b in abundant:
+			additive.add(a+b)
+	for i in range(28124):
+		if i not in additive: s += i
+	return s
+
+def problem24():
+	i = 1
+	n = '0123456789'
+	nextLexo(n)
+
+def nextLexo(n):
+	l = len(n)
+	if n[-1]>n[-2]
+
+
+def problem15(n,m):
+	#Inefficient (but right!)
+	cN = 1 if n == 1 else problem15(n-1,m)
+	cM = 1 if m == 1 else problem15(n,m-1)
+	return cN+cM
+
+def problem15x2(n,m):
+	#Slightly more efficient (and also correct) but not good enough
+	if n==m: return 2 if n==1 else 2*problem15x2(n-1,m)
+	else:
+		cN = 1 if n == 1 else problem15x2(n-1,m)
+		cM = 1 if m == 1 else problem15x2(n,m-1)
+		return cN+cM
+
+def problem15x3(n):
+	m = [[1,i+1] for i in range(n)]
+	x = 1
+	while x<n:
+		x += 1
+		for j in range(n):
+			m[j].append(1 if j==0 else m[j-1][x]+m[j][x-1])
+	return 2*m[-1][-1]
+
+def problem16(n):
+	s = '2'
+	for i in range(n-1):
+		new = ''
+		r = 0
+		for j in range(len(s)):
+			x = 2*int(s[(j+1)*-1])+r
+			new = str(x)[-1] + new
+			r = 0 if len(str(x)) == 1 else int(str(x)[0])
+		if r != 0: new = str(r) + new
+		s = new
+	sum = 0
+	for n in s:
+		sum += int(n)
+	return sum
+
+def problem17():
+	dict = {'one':191,
+			'two':90+100,
+			'three':90+100,
+			'four':90+100,
+			'five':90+100,
+			'six':90+100,
+			'seven':90+100,
+			'eight':90+100,
+			'nine':90+100,
+			'ten':10,
+			'eleven':10,
+			'twelve':10,
+			'thirteen':10,
+			'fourteen':10,
+			'fifteen':10,
+			'sixteen':10,
+			'seventeen':10,
+			'eighteen':10,
+			'nineteen':10,
+			'twenty':100,
+			'thirty':100,
+			'forty':100,
+			'fifty':100,
+			'sixty':100,
+			'seventy':100,
+			'eighty':100,
+			'ninety':100,
+			'hundred':900,
+			'and':99*9,
+			'thousand':1}
+	sum = 0
+	for k,v in dict.iteritems():
+		sum += len(k)*v
+	return sum
+
+def problem18():
+	m = [[75],
+		[95,64],
+		[17,47,82],
+		[18,35,87,10],
+		[20,04,82,47,65],
+		[19,01,23,75,03,34],
+		[88,02,77,73,07,63,67],
+		[99,65,04,28,06,16,70,92],
+		[41,41,26,56,83,40,80,70,33],
+		[41,48,72,33,47,32,37,16,94,29],
+		[53,71,44,65,25,43,91,52,97,51,14],
+		[70,11,33,28,77,73,17,78,39,68,17,57],
+		[91,71,52,38,17,14,91,43,58,50,27,29,48],
+		[63,66,04,68,89,53,67,30,73,16,69,87,40,31],
+		[04,62,98,27,23,9,70,98,73,93,38,53,60,04,23]]
+	s = []
+	for i in range(len(m)):
+		s.append([])
+		for j in range(len(m[i])):
+			if i == 0: s[i].append(m[i][j])
+			else:
+				p1 = s[i-1][j-1] if j > 0 else 0
+				p2 = s[i-1][j] if j < i else 0
+				s[i].append(max(p1,p2)+m[i][j])
+	return max(s[-1])
+
+def problem19():
+	sum = 0
+	for y in range(1901,2001):
+		for m in range(1,13):
+			if date(y, m, 1).isoweekday() == 7:
+				sum += 1
+	return sum
+
+def problem20(n):
+	p = '1'
+	for i in range(1,n+1):
+		r = 0
+		new = ''
+		for j in range(len(p)):
+			x = i*int(p[(j+1)*-1])+r
+			new = str(x)[-1] + new
+			r = 0 if len(str(x)) == 1 else int(str(x)[:-1])
+		if r != 0: new = str(r) + new
+		p = new
+	sum = 0
+	for n in p:
+		sum += int(n)
+	return sum
+
+def main():
+#	print 'Problem 21 %s' % problem21(10000)
+#	print 'Problem 22 %s' % problem22()
+#	print 'Problem 23 %s' % problem23()
+	print 'Problem 24 %s' % problem24()
+#	print 'Problem 15 %s' % problem15x3(20)
+#	print 'Problem 16 %s' % problem16(1000)
+#	print 'Problem 17 %s' % problem17()
+#	print 'Problem 18 %s' % problem18()
+#	print 'Problem 19 %s' % problem19()
+#	print 'Problem 20 %s' % problem20(100)
+
+if __name__ == '__main__':
+	main()
