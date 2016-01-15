@@ -1,0 +1,2 @@
+    let postGetResponseDescriptor = RKResponseDescriptor(mapping: postResponseMapping, method: RKRequestMethod.GET, pathPattern: "post/", keyPath: "results", statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+    objectManager.addResponseDescriptor(postGetResponseDescriptor)

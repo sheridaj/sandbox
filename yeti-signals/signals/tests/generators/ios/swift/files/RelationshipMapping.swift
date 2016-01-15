@@ -1,0 +1,1 @@
+    postResponseMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "user", toKeyPath: "user", withMapping: userResponseMapping))
